@@ -10,5 +10,5 @@ run-chefdk:
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v $(HOME)/Projects/chef/cookbooks:$(HOME)/cookbooks:z \
 		-v $(HOME)/.gitconfig:$(HOME)/.gitconfig \
-		--name brentwg_chefdk \
+		--name $(USER)_chefdk \
 		docker-chefdk
