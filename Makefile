@@ -1,6 +1,8 @@
 .PHONY: build-chefdk
 build-chefdk: 
-	docker build -t docker-chefdk .
+	docker build -t docker-chefdk . \
+		--build-arg USER=$(USER) \
+		--build-arg DOCKERGID=`getent group docker | awk -F: '{print $$3}'`
 
 .PHONY: run-chefdk
 run-chefdk:
