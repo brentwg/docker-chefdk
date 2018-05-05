@@ -1,4 +1,4 @@
-FROM chef/chef/chefdk:2.5.8
+FROM chef/chefdk:2.5.8
 
 RUN useradd -u 1000 brentwg && \
     mkdir -p /home/brentwg && \
