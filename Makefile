@@ -1,9 +1,9 @@
 .PHONY: build-chefdk
-build: 
+build-chefdk: 
 	docker build -t docker-chefdk .
 
-.PHONY: 
-build: run-chefdk
+.PHONY: run-chefdk
+run-chefdk:
 	docker run -it \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v $HOME/Projects/chef/cookbooks:$HOME/cookbooks \ 
