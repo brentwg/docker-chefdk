@@ -1,2 +1,3 @@
-# ChefDK in Docker
-TODO
+# Yet another ChefDK in Docker
+See `Makefile` for basic instructions about how to get this up and running.  
+- documentation commit to follow (much) later...
