@@ -9,7 +9,7 @@ RUN groupadd docker -g ${DOCKERGID}
 
 RUN apt-get clean && \
     apt-get update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
     apt-transport-https \
     ca-certificates \
     software-properties-common \
@@ -18,12 +18,14 @@ RUN apt-get clean && \
     build-essential \
     net-tools \
     locales \
-    vim
+    vim && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
     apt-get update && \
-    apt-get install -y docker-ce
+    apt-get install -y --no-install-recommends docker-ce && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN useradd -u 1000 ${USER} && \
     usermod -a -G docker ${USER} && \
