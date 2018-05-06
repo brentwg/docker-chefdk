@@ -1,9 +1,10 @@
-IMAGE_VERSION = 0.0.4
+IMAGE_VERSION = 0.0.5
 
 .PHONY: build
 build: 
 	docker build -t docker-chefdk:$(IMAGE_VERSION) . \
 		--build-arg USER=$(USER) \
+		--build-arg USERID=`id -u` \
 		--build-arg DOCKERGID=`getent group docker | awk -F: '{print $$3}'`
 
 .PHONY: run

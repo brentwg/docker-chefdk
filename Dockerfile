@@ -2,12 +2,12 @@ FROM chef/chefdk:2.5.8
 
 ARG DOCKERGID
 ARG USER
+ARG USERID
 
 USER root
 
-RUN groupadd docker -g ${DOCKERGID} 
-
-RUN apt-get update && \
+RUN groupadd docker -g ${DOCKERGID} && \ 
+    apt-get update && \
     apt-get install -y --no-install-recommends \
     apt-transport-https \
     ca-certificates \
@@ -30,14 +30,13 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* /var/tmp/*
 
-RUN useradd -u 1000 ${USER} && \
+RUN useradd -u ${USERID} ${USER} && \
     usermod -a -G docker ${USER} && \
     mkdir -p /home/${USER} && \
     chown -R ${USER}:${USER} /home/${USER} && \
     echo "${USER} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${USER} && \
-    chmod 0440 /etc/sudoers.d/${USER}
-
-RUN locale-gen en_US.UTF-8
+    chmod 0440 /etc/sudoers.d/${USER} && \
+    locale-gen en_US.UTF-8
 
 USER ${USER}
 
