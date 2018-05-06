@@ -14,3 +14,8 @@ run-chefdk:
 		-v $(HOME)/.gitconfig:$(HOME)/.gitconfig \
 		--name $(USER)_chefdk \
 		docker-chefdk:$(IMAGE_VERSION)
+
+.PHONY: clean
+clean:
+	- docker rm $(USER)_chefdk
+	- docker rmi docker-chefdk:$(IMAGE_VERSION)
