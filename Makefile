@@ -1,4 +1,4 @@
-IMAGE_VERSION = 0.0.3
+IMAGE_VERSION = 0.0.4
 
 .PHONY: build
 build: 

@@ -7,8 +7,7 @@ USER root
 
 RUN groupadd docker -g ${DOCKERGID} 
 
-RUN apt-get clean && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     apt-transport-https \
     ca-certificates \
@@ -19,13 +18,17 @@ RUN apt-get clean && \
     net-tools \
     locales \
     vim && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/* /var/tmp/*
 
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
     apt-get update && \
     apt-get install -y --no-install-recommends docker-ce && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/* /var/tmp/*
 
 RUN useradd -u 1000 ${USER} && \
     usermod -a -G docker ${USER} && \
@@ -40,7 +43,9 @@ USER ${USER}
 
 ENV PATH="/opt/chefdk/embedded/bin:${PATH}"
 
-RUN echo "alias bundle-install='/opt/chefdk/embedded/bin/bundle install --path vendor --binstubs'" >> /home/${USER}/.bashrc && \ 
-    echo "export EDITOR=vim" >> /home/${USER}/.bashrc && \
-    echo "export LC_CTYPE=en_US.UTF-8" >> /home/${USER}/.bashrc && \
-    echo "export LC_ALL=en_US.UTF-8" >> /home/${USER}/.bashrc
+WORKDIR /home/${USER}
+
+RUN echo "alias bundle-install='/opt/chefdk/embedded/bin/bundle install --path vendor --binstubs'" >> .bashrc && \ 
+    echo "export EDITOR=vim" >> .bashrc && \
+    echo "export LC_CTYPE=en_US.UTF-8" >> .bashrc && \
+    echo "export LC_ALL=en_US.UTF-8" >> .bashrc
